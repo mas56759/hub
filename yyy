@@ -20,3 +20,11 @@ def generate_response_from_transcript(transcript):
         return full_response.split('[')[1].split(']')[0]
     except:
         return ''
+module.exports = {
+  plugins: [
+    require("postcss-import"),
+    require("tailwindcss/nesting"),
+    require("tailwindcss")("./src/components/tailwind.config.js"),
+    require("postcss-hover-media-feature"),
+  ],
+}
