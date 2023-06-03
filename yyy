@@ -2,29 +2,16 @@ import openai
 from keys import OPENAI_API_KEY
 from prompts import create_prompt, INITIAL_RESPONSE
 import time
+def check_command(command, message):
+    if not shutil.which(command):
+        print(message)
+        sys.exit(1)
 
-openai.api_key = OPENAI_API_KEY
-
-def generate_response_from_transcript(transcript):
+def run_npm_commands():
+    os.chdir("gui")
     try:
-        response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo-0301",
-                messages=[{"role": "system", "content": create_prompt(transcript)}],
-                temperature = 0.0
-        )
-    except Exception as e:
-        print(e)
-        return ''
-    full_response = response.choices[0].message.content
-    try:
-        return full_response.split('[')[1].split(']')[0]
-    except:
-        return ''
-module.exports = {
-  plugins: [
-    require("postcss-import"),
-    require("tailwindcss/nesting"),
-    require("tailwindcss")("./src/components/tailwind.config.js"),
-    require("postcss-hover-media-feature"),
-  ],
-}
+        subprocess.run(["npm", "install"], check=True)
+    except subprocess.CalledProcessError:
+        print(f"Error during '{' '.join(sys.exc_info()[1].cmd)}'. Exiting.")
+        sys.exit(1)
+    os.chdir("..")
