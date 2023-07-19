@@ -1,7 +1,6 @@
 import custom_speech_recognition as sr
 from datetime import datetime
 
-RECORD_TIMEOUT = 3
 ENERGY_THRESHOLD = 1000
 DYNAMIC_ENERGY_THRESHOLD = False
 
